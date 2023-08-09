@@ -10,6 +10,9 @@ const Form1 = () => {
   const [password, setPassword] = useState("");
   const [terms, setTerms] = useState(false);
   const [users, setUsers] = useState([]);
+  const [dogum, setDogum] = useState("");
+  const [tcKimlik, setTcKimlik] = useState("");
+  const [role, setRole] = useState("");
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -24,6 +27,11 @@ const Form1 = () => {
       .required("Lütfen e-posta adresini giriniz!"),
     password: Yup.string().required("Lütfen şifrenizi giriniz!"),
     terms: Yup.boolean().oneOf([true]),
+    dogum: Yup.string().required("Doğum tarihinizi giriniz!"),
+    tcKimlik: Yup.string()
+      .matches(/^\d{11}$/, "Geçerli bir TC Kimlik No giriniz")
+      .required("TC Kimlik No gereklidir"),
+    role: Yup.string().required("Lütfen bir rol seçiniz!"),
   });
 
   const handleSubmit = async (event) => {
@@ -31,7 +39,7 @@ const Form1 = () => {
 
     try {
       await schema.validate(
-        { name, email, password, terms },
+        { name, email, password, terms, dogum, tcKimlik, role },
         { abortEarly: false }
       );
 
@@ -39,11 +47,14 @@ const Form1 = () => {
         name,
         email,
         password,
+        dogum,
+        tcKimlik,
+        role,
       });
 
       console.log("Response:", response.data);
 
-      setUsers([...users, response.data]); // users dizisine yeni kullanıcıyı ekleyin
+      setUsers([...users, response.data]);
       setName("");
       setEmail("");
       setPassword("");
@@ -101,6 +112,50 @@ const Form1 = () => {
           />
           <span style={{ color: "red" }}>{errors.password}</span>
         </FormGroup>
+        <FormGroup className="dogum-form">
+          <Label for="dogum">Doğum Tarihi</Label>
+          <Input
+            type="date"
+            id="dogum"
+            name="dogum"
+            value={dogum}
+            onChange={(e) => setDogum(e.target.value)}
+          />
+          <span style={{ color: "red" }}>{errors.dogum}</span>
+        </FormGroup>
+
+        <FormGroup className="tc-form">
+          <Label for="tcKimlik">TC Kimlik No:</Label>
+          <Input
+            type="text"
+            id="tcKimlik"
+            name="tcKimlik"
+            value={tcKimlik}
+            onChange={(e) => setTcKimlik(e.target.value)}
+          />
+          <span style={{ color: "red" }}>{errors.tcKimlik}</span>
+        </FormGroup>
+
+        <FormGroup className="role-form">
+          <Label for="role">Mesleğiniz</Label>
+          <Input
+            type="select"
+            id="role"
+            name="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="">Mesleği Seçiniz</option>
+            <option value="role 1">CS</option>
+            <option value="role 2">Boardman</option>
+            <option value="role 3">Mechanic</option>
+            <option value="role 4"> Avionic</option>
+            <option value="role 5">Uçak Bakım Mühendisi</option>
+            <option value="role 6">Uçak Bakım Yrd. Müh.</option>
+          </Input>
+
+          <span style={{ color: "red" }}>{errors.role}</span>
+        </FormGroup>
 
         <FormGroup check>
           <Label check>
@@ -123,7 +178,8 @@ const Form1 = () => {
       <ul className="ullar">
         {users.map((user, index) => (
           <li key={index}>
-            <p>İsim: {user.name}</p> <p>E-mail: {user.email}</p>
+            <p>İsim: {user.name}</p> <p>E-mail: {user.email}</p>{" "}
+            <p>Doğum Tarihi: {user.dogum}</p>
           </li>
         ))}
       </ul>
