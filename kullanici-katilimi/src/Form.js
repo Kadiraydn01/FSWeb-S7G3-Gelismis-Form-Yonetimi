@@ -26,7 +26,7 @@ const Form1 = () => {
       .email("Geçersiz e-posta!")
       .required("Lütfen e-posta adresini giriniz!"),
     password: Yup.string()
-      .matches(/^\d{6}$/, "Geçerli bir şifre giriniz")
+      .min(6, "Şifre en az 6 karakter olmalıdır")
       .required("Lütfen şifrenizi giriniz!"),
     terms: Yup.boolean().oneOf([true]),
     dogum: Yup.string().required("Doğum tarihinizi giriniz!"),
