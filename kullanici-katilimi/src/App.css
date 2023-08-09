@@ -11,3 +11,32 @@
   font-size: calc(10px + 2vmin);
   color: rgb(0, 0, 0);
 }
+.login-form {
+  background-color: rgb(173, 254, 227);
+  gap: 1rem;
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+  gap: 2rem;
+  margin: 1rem;
+  padding: 2 rem;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0, 25);
+  font-size: 1.5rem;
+}
+.ullar {
+  list-style-type: none;
+  display: block;
+  font-size: 2rem;
+  justify-content: space-between;
+}
+.form-data {
+  gap: 3 rem;
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: wrap;
+}
+.name-form {
+  display: flex;
+}

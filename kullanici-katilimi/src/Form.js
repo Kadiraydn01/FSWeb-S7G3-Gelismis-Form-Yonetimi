@@ -2,15 +2,20 @@ import React from "react";
 import { useState } from "react";
 import * as Yup from "yup";
 import axios from "axios";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { FormGroup, Form, Label, Input, Button } from "reactstrap";
 
 const Form1 = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [terms, setTerms] = useState(false);
-  const [errors, setErrors] = useState({});
   const [users, setUsers] = useState([]);
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    terms: "",
+  });
 
   const schema = Yup.object().shape({
     name: Yup.string().required("İsim yazmanız gerekli"),
@@ -58,70 +63,71 @@ const Form1 = () => {
   };
 
   return (
-    <Form>
+    <div className="login-form">
       <h1>Üyelik İçin ↓</h1>
-      <FormGroup onSubmit={handleSubmit}>
-        <Label htmlFor="name">İsim:</Label>
-        <Input
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <span style={{ color: "red" }}>{errors.name}</span>
-      </FormGroup>
-
-      <FormGroup>
-        <Label htmlFor="email">E-mail:</Label>
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <span style={{ color: "red" }}>{errors.email}</span>
-      </FormGroup>
-
-      <FormGroup>
-        <Label htmlFor="password">Şifre:</Label>
-        <Input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <span style={{ color: "red" }}>{errors.password}</span>
-      </FormGroup>
-
-      <FormGroup>
-        <Label htmlFor="terms">
+      <Form className="form-data" onSubmit={handleSubmit}>
+        <FormGroup className="name-form">
+          <Label for="name">İsim:</Label>
           <Input
-            type="checkbox"
-            id="terms"
-            name="terms"
-            checked={terms}
-            onChange={(e) => setTerms(e.target.checked)}
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-          Okudum onaylıyorum!
-        </Label>
-        <span style={{ color: "red" }}>{errors.terms}</span>
-      </FormGroup>
+          <span style={{ color: "red" }}>{errors.name}</span>
+        </FormGroup>
 
-      <Button type="submit">Kayıt Ol</Button>
-      <FormGroup>
-        <h2>Kayıt Olanlar:</h2>
-        <ul>
-          {users.map((user, index) => (
-            <li key={index}>
-              İsim: {user.name}, E-mail: {user.email}
-            </li>
-          ))}
-        </ul>
-      </FormGroup>
-    </Form>
+        <FormGroup className="mail-form">
+          <Label for="email">E-mail:</Label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <span style={{ color: "red" }}>{errors.email}</span>
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="password">Şifre:</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span style={{ color: "red" }}>{errors.password}</span>
+        </FormGroup>
+
+        <FormGroup check>
+          <Label check>
+            <Input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              checked={terms}
+              onChange={(e) => setTerms(e.target.checked)}
+            />
+            Okudum anladım onaylıyorum!
+          </Label>
+          <span style={{ color: "red" }}>{errors.terms}</span>
+        </FormGroup>
+
+        <Button type="submit">Üye Ol</Button>
+      </Form>
+
+      <h2>Üyeler:</h2>
+      <ul className="ullar">
+        {users.map((user, index) => (
+          <li key={index}>
+            <p>İsim: {user.name}</p> <p>E-mail: {user.email}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 export default Form1;
