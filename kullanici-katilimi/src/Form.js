@@ -103,7 +103,7 @@ const Form1 = () => {
           <span style={{ color: "red" }}>{errors.email}</span>
         </FormGroup>
 
-        <FormGroup>
+        <FormGroup className="password-form">
           <Label for="password">Şifre:</Label>
           <Input
             type="password"
@@ -159,7 +159,7 @@ const Form1 = () => {
           <span style={{ color: "red" }}>{errors.role}</span>
         </FormGroup>
 
-        <FormGroup check>
+        <FormGroup className="terms-form">
           <Label check>
             <Input
               type="checkbox"
@@ -168,7 +168,7 @@ const Form1 = () => {
               checked={terms}
               onChange={(e) => setTerms(e.target.checked)}
             />
-            Okudum anladım onaylıyorum!
+            <span>Okudum anladım onaylıyorum!</span>
           </Label>
           <span style={{ color: "red" }}>{errors.terms}</span>
         </FormGroup>
